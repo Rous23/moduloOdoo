@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+openacademy_courses_full_access,openacademy_courses_full_access,model_openacademy_courses,,1,1,1,1
+openacademy_sesions_full_access,openacademy_sesions_full_access,model_openacademy_sesions,,1,1,1,1

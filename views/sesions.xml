@@ -1,0 +1,139 @@
+<odoo>
+    <data>
+
+    <!-- openacademy.sesions form view -->
+    <record id="openacademy.sesions_view_form" model="ir.ui.view">
+        <field name="name">openacademy.sesions.view.form</field>
+        <field name="model">openacademy.sesions</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <!-- Add your fields here -->
+                        <field name="id_course"/>
+                        <field name="name"/>
+                        <field name="date"/>
+                        <field name="duration"/>
+                        <field name="instructor_id"/>
+                        <field name="active"/>
+                        <field name="asientos"/>
+                        <field name="asientos_ocupados" widget="progressbar"/>
+                        <field name="id_asistente"/>
+                        
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- openacademy.sesions tree view -->
+    <record id="sesions_view_tree" model="ir.ui.view">
+        <field name="name">openacademy.sesions.view.tree</field>
+        <field name="model">openacademy.sesions</field>
+        <field name="arch" type="xml">
+            <tree string="Sesion tree" decoration-info="duration&lt;5" decoration-danger="duration&gt;15">
+                <!-- Add your fields here -->
+                <field name="name"/>
+                <field name="id_course"/>
+                <field name="duration" invisible="1"/>
+                <field name="asientos_ocupados" widget="progressbar"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- openacademy.sesions calendar view -->
+    <record id="sesions_view_calendar" model="ir.ui.view">
+        <field name="name">Calendario</field>
+        <field name="model">openacademy.sesions</field>
+        <field name="arch" type="xml">
+            <calendar string="Calendario" date_start="date" date_stop="fecha_final" color="instructor_id">
+                <!-- Add your fields here -->
+                <field name="name"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- openacademy.sesions gantt view -->
+    <record id="sesions_view_gantt" model="ir.ui.view">
+        <field name="name">openacademy.sesions.view.gantt</field>
+        <field name="model">openacademy.sesions</field>
+        <field name="arch" type="xml">
+            <gantt string="Sesión Gantt" color="id_course" date_start="date" date_delay="horas" default_group_by='instructor_id'>
+                <!-- Add your fields here -->
+                <field name="name"/>
+            </gantt>
+        </field>
+    </record>
+
+    <!-- openacademy.sesions graph view -->
+    <record id="sesions_view_graph" model="ir.ui.view">
+        <field name="name">openacademy.sesions.view.graph</field>
+        <field name="model">openacademy.sesions</field>
+        <field name="arch" type="xml">
+            <graph string="Participantes por cursos">
+                <!-- Add your fields here -->
+                <field name="id_course"/>
+                <field name="cant_asistentes" type="measure"/>
+            </graph>
+        </field>
+    </record>
+    
+    <!-- openacademy.sesions kanban view -->
+    <record id="model_name_view_kanban" model="ir.ui.view">
+        <field name="name">openacademy.sesions.view.kanban</field>
+        <field name="model">openacademy.sesions</field>
+        <field name="arch" type="xml">
+            <kanban string="Kanban Description" default_group_by="id_course">
+                <!-- Add your fields here -->
+                <field name="color"/>
+                <templates>
+                    <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_color_{{kanban_getcolor(record.color.raw_value)}} oe_kanban_global_click_edit oe_semantic_html_override oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
+                                <div class="oe_dropdown_kanban">
+                                    <!-- dropdown menu -->
+                                    <div class="oe_dropdown_toggle">
+                                        <i class="fa fa-bars fa-lg"/>
+                                        <ul class="oe_dropdown_menu">
+                                            <li>
+                                                <a type="delete">Delete</a>
+                                            </li>
+                                            <li>
+                                                <ul class="oe_kanban_colorpicker"
+                                                    data-field="color"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="oe_clear"></div>
+                                </div>
+                                <div t-attf-class="oe_kanban_content">
+                                    <!-- title -->
+                                    Session name:
+                                    <field name="name"/>
+                                    <br/>
+                                    Start date:
+                                    <field name="date"/>
+                                    <br/>
+                                    duration:
+                                    <field name="duration"/>
+                                </div>
+                            </div>
+                        </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <!-- openacademy.sesions action window -->
+    <record id="sesions_action" model="ir.actions.act_window">
+        <field name="name">Sesiones</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">openacademy.sesions</field>
+        <field name="view_mode">tree,form,calendar,gantt,graph</field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="sesions_menu_act" name="Sesión" parent="openacademy_menu_root" action="sesions_action" sequence="11"/>
+    <!-- explicit list view definition -->
+
+    
+    </data>
+</odoo>
